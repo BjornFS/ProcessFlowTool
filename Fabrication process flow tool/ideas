@@ -1,0 +1,31 @@
+### Need to have
+
+    - labelling to state what process is occuring --> drag n drop labels, source of insp: https://stackoverflow.com/questions/47700462/creating-and-moving-shapes-on-click-with-tkinter-and-canvas
+    - add legend
+
+    - A goBack() function to work on previous subwindows
+    - A marker to show what subwindow you are currently working in
+
+    - GoNext() needs to include a copy of the previous structure. Use 'storing_rectangle_info.py' for inspo.
+
+    - colorcoding for materials
+
+
+
+
+### Nice to have
+
+    - add custom material + custom colorcoding
+    - process action (i.e. arrows to show bombardment/uv exposure)
+
+
+
+### DONE:
+
+    - AddLayers() function that adds layers to wafer
+    - A GoNext() function that goes to the next step of the process flow
+
+
+### BUGS:
+
+    - If structure becomes too tall (wafer + 3 layers) the next line gets whack. See 'BUG1.png' for example.
