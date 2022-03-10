@@ -24,8 +24,3 @@
 
     - AddLayers() function that adds layers to wafer
     - A GoNext() function that goes to the next step of the process flow
-
-
-### BUGS:
-
-    - If structure becomes too tall (wafer + 3 layers) the next line gets whack. See 'BUG1.png' for example.

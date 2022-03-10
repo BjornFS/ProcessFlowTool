@@ -29,7 +29,6 @@ def Bulk_Glass():
     global Bulk_Glass
     Bulk_Glass = can.create_rectangle(pos[0], pos[1], pos[2], pos[3], fill=_from_rgb((135,200,200)), outline="")
 
-
 ### Semiconductors
 def Silicon():
     global Silicon
@@ -94,18 +93,16 @@ def Topas():
 #def Custom():                                                                              UNDER CONSTRUCTION - custom
 
 
-
-
 ############    MAIN
 
 # inital position
-Size_initx = int(40) # x-coord0
-Size_inity = int(100) # y-coord0
+Size_initx = 40 # x-coord0
+Size_inity = 100 # y-coord0
 
 # Spacing specifications
-Length_wafer = int(150) # x-coord1
-Height_wafer = int(25) # y-coord1
-Size_gap = int(75)  # increment
+Length_wafer = 150 # x-coord1
+Height_wafer = 25 # y-coord1
+Size_gap = 75  # increment
 
 # Go to the right in the same line
 Size_GoNext = Length_wafer + Size_gap # x-coord change
@@ -114,10 +111,10 @@ Size_GoNext = Length_wafer + Size_gap # x-coord change
 Size_SkipLine = 150 # y-coord change
 
 # layers
-Height_layer = int(10)
+Height_layer = 10
 
 # Allowed Height
-MAXStructy = int(105)
+MAXStructy = 105
 
 # max y range
 Size_window = 640
@@ -130,27 +127,18 @@ print(pos)
 
 #Height_custom = 0                                                                          UNDER CONSTRUCTION - custom
 
+CurrentStructure = []
+
 
 def AddLayer(pos):
-    #if pos[3] - pos[1] == Height_wafer:     # checking if wafer
     pos[3] = pos[1]
     pos[1] = pos[1] - Height_layer
 
-    #elif pos[3] - pos[1] == Height_layer:   # checking if layer
-        #pos[1] = 
-    #else:
-        #print("error while adding layer")
-        
-
-def DryEtch(pos):
-
-    return 0
-
-def GoNext(pos):                                                                    #NEEDS TO NOT BE HARDCODED
+def GoNext(pos):
     print("------------")
     print(pos)
     # First row --> go right
-    if pos[2] < Size_window and pos[1] <= Size_inity + MAXStructy: # if position is smaller than the window + its not too tall
+    if pos[2] < 640 and pos[1] >= 0 and pos[3] <= 175:
         # Shifting the x-coords to the right
         pos[0] = pos[0] + Size_GoNext
         pos[2] = pos[2] + Size_GoNext
@@ -163,22 +151,8 @@ def GoNext(pos):                                                                
         print("------------")
         print(pos)
 
-    # Go to new line
-    elif pos[2] >= Size_window:
-        # Returning the x-coords to baseline
-        pos[0] = Size_initx
-        pos[2] = Size_initx + Length_wafer
-        print("x : baseline")
-
-        # Shifting the y-coords to new line
-        pos[1] = pos[1] + Size_SkipLine
-        pos[3] = pos[3] + Size_SkipLine
-        print("y : new line")
-        print("------------")
-        print(pos)
-    
     # Second row --> go right
-    elif pos[2] < Size_window and pos[1] <= Size_inity + MAXStructy + Size_SkipLine:
+    elif pos[2] < 640 and pos[1] >= 175 and pos[3] <= 300:
         # Shifting the x-coords to the right
         pos[0] = pos[0] + Size_GoNext
         pos[2] = pos[2] + Size_GoNext
@@ -186,61 +160,128 @@ def GoNext(pos):                                                                
 
         # Returning the y-coords to baseline
         pos[1] = Size_inity + Size_SkipLine
-        pos[3] = Size_inity + Size_SkipLine + Height_wafer 
+        pos[3] = pos[1] + Height_wafer
         print("y : baseline")
         print("------------")
         print(pos)
-    
+
     # Third row --> go right
-    elif pos[2] < Size_window and pos[1] <=Size_inity + MAXStructy + Size_SkipLine*2:
+    elif pos[2] < 640 and pos[1] >= 300 and pos[3] <= 425:
         # Shifting the x-coords to the right
         pos[0] = pos[0] + Size_GoNext
         pos[2] = pos[2] + Size_GoNext
         print("x : right")
 
         # Returning the y-coords to baseline
-        pos[1] = Size_inity + Size_SkipLine*2
-        pos[3] = Size_inity + Size_SkipLine*2 + Height_wafer
+        pos[1] = Size_inity + (Size_SkipLine)*2
+        pos[3] = pos[1] + Height_wafer
         print("y : baseline")
         print("------------")
         print(pos)
     
     # Fourth row --> go right
-    elif pos[2] < Size_window and pos[1] <=Size_inity + MAXStructy + Size_SkipLine*3:
+    elif pos[2] < 640 and pos[1] >= 425 and pos[3] <= 575:
         # Shifting the x-coords to the right
         pos[0] = pos[0] + Size_GoNext
         pos[2] = pos[2] + Size_GoNext
         print("x : right")
 
         # Returning the y-coords to baseline
-        pos[1] = Size_inity + Size_SkipLine*3
-        pos[3] = Size_inity + Size_SkipLine*3 + Height_wafer
+        pos[1] = Size_inity + (Size_SkipLine)*3
+        pos[3] = pos[1] + Height_wafer
         print("y : baseline")
         print("------------")
         print(pos)
 
     # Fifth row --> go right
-    elif pos[2] < Size_window and pos[1] <= Size_inity + MAXStructy + Size_SkipLine*4:
+    elif pos[2] < 640 and pos[1] >= 575:
         # Shifting the x-coords to the right
         pos[0] = pos[0] + Size_GoNext
         pos[2] = pos[2] + Size_GoNext
         print("x : right")
 
         # Returning the y-coords to baseline
-        pos[1] = Size_inity + Size_SkipLine*4
-        pos[3] = Size_inity + Size_SkipLine*4 + Height_wafer
+        pos[1] = Size_inity + (Size_SkipLine)*4
+        pos[3] = pos[1] + Height_wafer
         print("y : baseline")
         print("------------")
         print(pos)
 
-# append all of the positions into the vector Currentstructure.
-# then when called upon, store the materials as well
-# that way a copy can be made.
 
-CurrentStructure = []
+    # Go to line 2
+    elif pos[2] >= 640 and pos[1] >= 0 and pos[3] <= 175:
+        # Returning the x-coords to baseline
+        pos[0] = Size_initx
+        pos[2] = Size_initx + Length_wafer
+        print("x : baseline")
+
+        # Shifting the y-coords to new line
+        pos[1] = Size_inity + Size_SkipLine
+        pos[3] = pos[1] + Height_wafer
+        print("y : new line")
+        print("------------")
+        print(pos)
+
+    # Go to line 3
+    elif pos[2] >= 640 and pos[1] >= 175 and pos[3] <= 300:
+        # Returning the x-coords to baseline
+        pos[0] = Size_initx
+        pos[2] = Size_initx + Length_wafer
+        print("x : baseline")
+
+        # Shifting the y-coords to new line
+        pos[1] = Size_inity + (Size_SkipLine)*2
+        pos[3] = pos[1] + Height_wafer
+        print("y : new line")
+        print("------------")
+        print(pos)
+
+    # Go to line 4
+    elif pos[2] >= 640 and pos[1] >= 300 and pos[3] <= 425:
+        # Returning the x-coords to baseline
+        pos[0] = Size_initx
+        pos[2] = Size_initx + Length_wafer
+        print("x : baseline")
+
+        # Shifting the y-coords to new line
+        pos[1] = Size_inity + (Size_SkipLine)*3
+        pos[3] = pos[1] + Height_wafer
+        print("y : new line")
+        print("------------")
+        print(pos)
+
+    # Go to line 5
+    elif pos[2] >= 640 and pos[3] > 425 :
+        # Returning the x-coords to baseline
+        pos[0] = Size_initx
+        pos[2] = Size_initx + Length_wafer
+        print("x : baseline")
+
+        # Shifting the y-coords to new line
+        pos[1] = Size_inity + (Size_SkipLine)*4
+        pos[3] = pos[1] + Height_wafer
+        print("y : new line")
+        print("------------")
+        print(pos)
+
+#### saving the structs so when pressing goNext() it can put the new struct in by itself
+# append all of the positions into the vector Currentstructure.
+# set up for loop as such:
+#   if on same row:
+#       for i in range (len(CurrentStructure))
+#           disp(x0 + smth, y0 , x1 + smth, y1)
+#   if on new line:
+#       for j in range(same)
+#           disp(x0,y0 + smth,x1,y1 + smth)
+
+
+
+def DryEtch(pos):
+    
+    return 0
+
 
 ############    GUI
-
 
 ### general config
 root = tk.Tk()
